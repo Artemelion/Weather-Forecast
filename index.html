@@ -1,11 +1,133 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>Weather Forecast</title>
+
+  <link rel="stylesheet" href="style.css"/>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 </head>
+
 <body>
-    
+  <header class="site-header">
+    <div class="container header-row">
+      <a class="brand" href="#">Weather</a>
+
+      <form class="search" id="searchForm" role="search" aria-label="Поиск города">
+        <label for="cityInput" style="display:none;">Город</label>
+        <input
+          id="cityInput"
+          class="search__input"
+          type="search"
+          placeholder="Город..."
+          autocomplete="off"
+        />
+        <button class="search__btn" type="submit">Найти</button>
+      </form>
+
+      <nav class="top-nav" aria-label="Меню">
+        <a href="#today">Сегодня</a>
+        <a href="#hourly">Почасово</a>
+        <a href="#daily">7 дней</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="site-main">
+    <div class="container layout">
+      <section class="main-col" aria-label="Погода">
+
+        <section class="card" id="today" aria-label="Текущая погода">
+          <h1 class="hero-title"><span id="placeName">Одесса</span></h1>
+          <p class="hero-meta">
+            <span id="localTime">Сейчас</span> · <span id="conditionsText">Облачно</span>
+          </p>
+
+          <div class="hero-temp">
+            <span id="tempNow">+7</span>°C
+          </div>
+
+          <div class="kpi-grid">
+            <div class="kpi">
+              <div class="kpi-label">Ощущается</div>
+              <div class="kpi-value" id="feelsLike">+5°C</div>
+            </div>
+
+            <div class="kpi">
+              <div class="kpi-label">Ветер</div>
+              <div class="kpi-value" id="wind">4 м/с</div>
+            </div>
+
+            <div class="kpi">
+              <div class="kpi-label">Влажность</div>
+              <div class="kpi-value" id="humidity">68%</div>
+            </div>
+
+            <div class="kpi">
+              <div class="kpi-label">Давление</div>
+              <div class="kpi-value" id="pressure">1016 гПа</div>
+            </div>
+          </div>
+        </section>
+
+        <section class="card" id="hourly" aria-label="Почасовой прогноз">
+          <h2>Почасовой прогноз</h2>
+          <div class="hourly-list" role="list" aria-label="Список почасового прогноза" id="hourlyList"></div>
+        </section>
+
+        <section class="card" id="daily" aria-label="Прогноз на 7 дней">
+          <h2>7 дней</h2>
+          <ul class="daily" id="dailyList" aria-label="Список прогноза на 7 дней"></ul>
+        </section>
+
+      </section>
+
+      <aside class="side-col" aria-label="Дополнительно">
+        <section class="card" aria-label="Карта">
+          <h2>Карта</h2>
+          <div style="height:200px; background:#f5f5f5; border:1px solid #ddd; display:flex; align-items:center; justify-content:center;">
+            Map (заглушка)
+          </div>
+        </section>
+
+        <section class="card" aria-label="Индексы">
+          <h2>Индексы</h2>
+
+          <div class="kpi-grid">
+            <div class="kpi">
+              <div class="kpi-label">Осадки</div>
+              <div class="kpi-value" id="precip">0 мм</div>
+            </div>
+
+            <div class="kpi">
+              <div class="kpi-label">Видимость</div>
+              <div class="kpi-value" id="visibility">10 км</div>
+            </div>
+
+            <div class="kpi">
+              <div class="kpi-label">UV</div>
+              <div class="kpi-value" id="uv">1</div>
+            </div>
+
+            <div class="kpi">
+              <div class="kpi-label">Облачность</div>
+              <div class="kpi-value" id="clouds">70%</div>
+            </div>
+          </div>
+        </section>
+      </aside>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <small>© <span id="year"></span> Weather Forecast</small>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>

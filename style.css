@@ -1,0 +1,167 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  color: #111;
+  background: #fff;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.site-header {
+  background: #fff;
+  border-bottom: 1px solid #ddd;
+}
+
+.header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px 0;
+  flex-wrap: wrap;
+}
+
+.brand {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.top-nav {
+  display: flex;
+  gap: 10px;
+}
+
+.top-nav a {
+  color: #111;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.search {
+  display: flex;
+  gap: 8px;
+  flex: 1;
+  min-width: 240px;
+}
+
+.search__input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+
+.search__btn {
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  background: #f2f2f2;
+  cursor: pointer;
+}
+
+.search__btn:hover {
+  background: #e8e8e8;
+}
+
+.site-main {
+  padding: 16px 0;
+}
+
+.layout {
+  display: grid;
+  gap: 16px;
+}
+
+@media (min-width: 900px) {
+  .layout {
+    grid-template-columns: 1fr 320px;
+    align-items: start;
+  }
+}
+
+.card {
+  border: 1px solid #ddd;
+  padding: 16px;
+  background: #fff;
+}
+
+.hero-title {
+  margin: 0;
+  font-size: 24px;
+}
+
+.hero-meta {
+  margin: 6px 0 0;
+  color: #555;
+}
+
+.hero-temp {
+  font-size: 44px;
+  font-weight: bold;
+}
+
+.kpi-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.kpi {
+  border: 1px solid #eee;
+  padding: 10px;
+}
+
+.kpi-label {
+  font-size: 12px;
+  color: #666;
+}
+
+.kpi-value {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.hourly-list {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 140px;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 6px;
+}
+
+.hour {
+  border: 1px solid #eee;
+  padding: 10px;
+}
+
+.daily {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.day {
+  border: 1px solid #eee;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.site-footer {
+  border-top: 1px solid #ddd;
+  padding: 12px 0;
+  margin-top: 16px;
+  color: #666;
+  font-size: 13px;
+}
