@@ -226,7 +226,6 @@ function wmo(code) {
   return { icon: "⛅", text: "cond.partlyCloudy" };
 }
 
-/* time helpers (без timezone-ошибок) */
 function hhmm(iso) {
   if (!iso || iso.length < 16) return "—";
   return iso.slice(11, 16);
@@ -274,7 +273,7 @@ function setRadar(lat, lon) {
   $("#radarFrame").attr("src", src);
 }
 
-/* hourly slider sync */
+/* hourly slider */
 function syncHourlyRange(resetToStart) {
   var list = document.getElementById("hourlyList");
   var range = document.getElementById("hourlyRange");
