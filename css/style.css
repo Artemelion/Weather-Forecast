@@ -1,3 +1,20 @@
+html{
+  --r:1rem;
+
+  --h1:clamp(1.45rem,2.4vw,2rem);
+  --h2:clamp(1.1rem,1.6vw,1.35rem);
+  --h3:1rem;
+
+  --fs:.95rem;
+  --fssm:.85rem;
+
+  --pad:clamp(.9rem,2vw,1.25rem);
+  --hour-gap:.75rem;
+
+  --brand1:#1a7cff;
+  --brand2:#53c7ff;
+}
+
 html[data-theme="light"]{
   --bg:#f6f9ff;
   --panel:rgba(255,255,255,.72);
@@ -5,32 +22,33 @@ html[data-theme="light"]{
   --text:#0b1220;
   --muted:rgba(11,18,32,.65);
   --line:rgba(11,18,32,.12);
-
-  --brand1:#1a7cff;
-  --brand2:#53c7ff;
-
   --shadow:0 1rem 2.4rem rgba(0,0,0,.12);
-  --r:1rem;
-
-  --h1:clamp(1.45rem,2.4vw,2rem);
-  --h2:clamp(1.1rem,1.6vw,1.35rem);
-  --h3:1rem;
-  --fs:.95rem;
-  --fssm:.85rem;
-
-  --pad:clamp(.9rem,2vw,1.25rem);
-  --hour-gap:.75rem;
 }
 
 html[data-theme="dark"]{
   --bg:#0b1220;
-  --panel:rgba(15,26,46,.72);
-  --panel2:rgba(12,22,41,.55);
+  --panel: rgba(20, 32, 52, .78);
+  --panel2: rgba(24, 38, 62, .62);
   --text:#e9eefc;
-  --muted:rgba(233,238,252,.7);
-  --line:rgba(233,238,252,.14);
+  --muted: rgba(233,238,252,.78);
+  --line: rgba(233,238,252,.18);
   --shadow:0 1rem 2.6rem rgba(0,0,0,.35);
 }
+
+html[data-theme="dark"]{
+}
+
+/* ensure text readable */
+html[data-theme="dark"] .card,
+html[data-theme="dark"] .stat,
+html[data-theme="dark"] .hourly > .hour,
+html[data-theme="dark"] .day,
+html[data-theme="dark"] .sunbox,
+html[data-theme="dark"] .chip{
+  color: var(--text);
+}
+
+
 
 *{box-sizing:border-box}
 html,body{height:100%}
@@ -293,7 +311,7 @@ html[data-theme="dark"] .topbar{
 .stat-v{font-size:1.05rem;font-weight:800;margin-top:.2rem}
 .stat-s{font-size:var(--fssm);color:var(--muted);margin-top:.1rem}
 
-/* HOURLY: 4 cards visible */
+/* 4 cards hour */
 .hourly{
   min-width:0; 
   display:flex;
@@ -323,9 +341,9 @@ html[data-theme="dark"] .topbar{
   display:flex;
   flex-direction:column;
   justify-content:flex-start;
-  min-width: 0;           /* разрешаем сжиматься */
-max-width: 100%;        /* не даём раздуваться */
-overflow: hidden;       /* чтобы длинный текст не ломал ширину */
+  min-width: 0;           
+  max-width: 100%;        
+  overflow: hidden;  
 
 }
 
@@ -342,7 +360,6 @@ overflow: hidden;       /* чтобы длинный текст не ломал 
 .hourlySlider{margin-top:.55rem}
 .hourlySlider .form-range{width:100%}
 
-/* DAILY */
 .daily{
   display:grid;
   gap:.75rem;
@@ -365,11 +382,10 @@ overflow: hidden;       /* чтобы длинный текст не ломал 
   min-height:6.2rem;
 }
 
-/* icon near weekday (NOT far right) */
 .day-top{
   display:flex;
   align-items:center;
-  justify-content:flex-start; /* <- was space-between */
+  justify-content:flex-start;
   gap:.5rem;
 }
 .day-name{font-weight:800}
@@ -461,7 +477,6 @@ html[data-theme="dark"] .is-loading .day::after{
 }
 @keyframes shimmer{to{transform:translateX(100%)}}
 
-/* RESPONSIVE */
 @media (max-width: 1100px){
   .daily-7{grid-template-columns:repeat(4, minmax(0,1fr));}
 }
@@ -495,26 +510,3 @@ html[data-theme="dark"] .is-loading .day::after{
   }
 }
 
-/* ===== DARK THEME: ONLY COLORS (NO LAYOUT CHANGES) ===== */
-html[data-theme="dark"]{
-  --panel: rgba(20, 32, 52, .78);
-  --panel2: rgba(24, 38, 62, .62);
-  --line: rgba(233,238,252,.18);
-  --muted: rgba(233,238,252,.78);
-}
-
-/* ensure text readable */
-html[data-theme="dark"] .card,
-html[data-theme="dark"] .stat,
-html[data-theme="dark"] .hourly > .hour,
-html[data-theme="dark"] .day,
-html[data-theme="dark"] .sunbox,
-html[data-theme="dark"] .chip{
-  color: var(--text);
-}
-
-/* FIX: allow grid children to shrink (prevents narrow hourly in dark) */
-.hero > * { min-width: 0; }
-.rightcol { min-width: 0; }
-
-.card { min-width: 0; }
