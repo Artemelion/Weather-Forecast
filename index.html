@@ -1,138 +1,193 @@
-<!DOCTYPE html>
-<html lang="ru">
+<!doctype html>
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>WeatherForecast</title>
 
-  <title>Weather Forecast</title>
-
-  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css" />
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 </head>
 
 <body>
-  <header class="site-header">
-    <div class="container header-row">
-      <a class="brand" href="#">Weather</a>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="#">
+        <span class="brand-logo" aria-hidden="true">🌤️</span>
+        <span class="brand-name" data-i18n="brand">WeatherForecast</span>
+      </a>
 
-      <form class="search" id="searchForm" role="search" aria-label="Поиск города">
-        <label for="cityInput" style="display:none;">Город</label>
-        <input
-          id="cityInput"
-          class="search__input"
-          type="search"
-          placeholder="Город..."
-          autocomplete="off"
-        />
-        <button class="search__btn" type="submit">Найти</button>
-      </form>
-
-      <nav class="top-nav" aria-label="Меню">
-        <a href="#today">Сегодня</a>
-        <a href="#hourly">Почасово</a>
-        <a href="#daily">7 дней</a>
+      <nav class="menu" aria-label="primary">
+        <a href="#today" data-i18n="nav.today">Today</a>
+        <a href="#forecast" data-i18n="nav.forecast">Forecast</a>
+        <a href="#radar" data-i18n="nav.radar">Radar</a>
+        <a href="#news" data-i18n="nav.news">News</a>
       </nav>
+
+      <div class="topbar-controls">
+        <form id="searchForm" class="search" autocomplete="off">
+          <input id="q" class="search-input" type="search" data-i18n-placeholder="search.placeholder" placeholder="Search city…" />
+          <button type="submit" class="btn btn-icon" aria-label="Search">🔎</button>
+          <div id="suggestions" class="suggestions" role="listbox" aria-label="Suggestions"></div>
+        </form>
+
+        <button id="btnMyLocation" class="btn" type="button" data-i18n="btn.myLocation">My location</button>
+
+        <select id="langSelect" class="select" aria-label="Language">
+          <option value="en">EN</option>
+          <option value="ru">RU</option>
+          <option value="ua">UA</option>
+        </select>
+
+        <button id="themeToggle" class="btn btn-icon" type="button" aria-label="Theme">🌙</button>
+        <button id="accountBtn" class="btn btn-primary" type="button" data-i18n="btn.signIn">Sign in</button>
+      </div>
     </div>
   </header>
 
-  <main class="site-main">
-    <div class="container layout">
-      <section class="main-col" aria-label="Погода">
-
-        <section class="card" id="today" aria-label="Текущая погода">
-          <h1 class="hero-title"><span id="placeName">Одесса</span></h1>
-          <p class="hero-meta">
-            <span id="localTime">Сейчас</span> · <span id="conditionsText">Облачно</span>
-          </p>
-
-          <div class="hero-temp">
-            <span id="tempNow">+7</span>°C
+  <main class="main" id="today">
+    <div class="container">
+      <div class="hero">
+        <section class="card now">
+          <div class="card-head">
+            <div>
+              <h1 id="placeTitle" class="h1">London</h1>
+              <div id="updatedAt" class="small muted">—</div>
+            </div>
+            <button class="btn btn-icon" type="button" aria-label="Favorite">⭐</button>
           </div>
 
-          <div class="kpi-grid">
-            <div class="kpi">
-              <div class="kpi-label">Ощущается</div>
-              <div class="kpi-value" id="feelsLike">+5°C</div>
+          <div class="now-main">
+            <div id="nowIcon" class="now-icon" aria-hidden="true">⛅</div>
+            <div>
+              <div class="now-temp">
+                <span id="nowTemp">—</span><span id="tempUnit" class="unit">°C</span>
+              </div>
+              <div id="nowDesc" class="muted">—</div>
+              <div class="small">
+                <span data-i18n="now.feels">Feels like</span>:
+                <strong><span id="nowFeels">—</span><span id="tempUnit2">°C</span></strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="chips" aria-label="chips">
+            <span id="chipDayNight" class="chip">—</span>
+            <span id="chipTimezone" class="chip">—</span>
+          </div>
+
+          <div class="sunrow">
+            <div class="sunbox">
+              <div class="sun-k" data-i18n="stat.sunrise">Sunrise</div>
+              <div id="statSunrise" class="sun-v">—</div>
+            </div>
+            <div class="sunbox">
+              <div class="sun-k" data-i18n="stat.sunset">Sunset</div>
+              <div id="statSunset" class="sun-v">—</div>
+            </div>
+          </div>
+
+          <div class="grid stats stats-2">
+            <div class="stat">
+              <div class="stat-k" data-i18n="stat.wind">Wind</div>
+              <div id="statWind" class="stat-v">—</div>
+              <div id="statWindDir" class="stat-s">—</div>
             </div>
 
-            <div class="kpi">
-              <div class="kpi-label">Ветер</div>
-              <div class="kpi-value" id="wind">4 м/с</div>
+            <div class="stat">
+              <div class="stat-k" data-i18n="stat.humidity">Humidity</div>
+              <div class="stat-v"><span id="statHumidity">—</span>%</div>
             </div>
 
-            <div class="kpi">
-              <div class="kpi-label">Влажность</div>
-              <div class="kpi-value" id="humidity">68%</div>
+            <div class="stat">
+              <div class="stat-k" data-i18n="stat.pressure">Pressure</div>
+              <div class="stat-v"><span id="statPressure">—</span> hPa</div>
             </div>
 
-            <div class="kpi">
-              <div class="kpi-label">Давление</div>
-              <div class="kpi-value" id="pressure">1016 гПа</div>
+            <div class="stat">
+              <div class="stat-k" data-i18n="stat.clouds">Clouds</div>
+              <div class="stat-v"><span id="statClouds">—</span>%</div>
+            </div>
+
+            <div class="stat">
+              <div class="stat-k" data-i18n="stat.visibility">Visibility</div>
+              <div class="stat-v"><span id="statVisibility">—</span> km</div>
+            </div>
+
+            <div class="stat">
+              <div class="stat-k" data-i18n="stat.uv">UV</div>
+              <div class="stat-v"><span id="statUV">—</span></div>
             </div>
           </div>
         </section>
 
-        <section class="card" id="hourly" aria-label="Почасовой прогноз">
-          <h2>Почасовой прогноз</h2>
-          <div class="hourly-list" role="list" aria-label="Список почасового прогноза" id="hourlyList"></div>
-        </section>
+        <section class="rightcol">
+          <section class="card" id="forecast">
+            <div class="section-head">
+              <h2 class="h2" data-i18n="hourly.title">Next 24 hours</h2>
+              <div id="hourlyHint" class="small muted">—</div>
+            </div>
 
-        <section class="card" id="daily" aria-label="Прогноз на 7 дней">
-          <h2>7 дней</h2>
-          <ul class="daily" id="dailyList" aria-label="Список прогноза на 7 дней"></ul>
-        </section>
+            <div id="hourlyList" class="hourly" aria-label="Hourly forecast"></div>
 
+            <div class="hourlySlider">
+              <input id="hourlyRange" class="form-range" type="range" min="0" max="0" value="0" />
+            </div>
+          </section>
+
+          <section class="card dailyWrap">
+            <div class="section-head">
+              <h2 class="h2" data-i18n="daily.title">Daily forecast</h2>
+
+              <div class="segmented" role="tablist" aria-label="Days mode">
+                <button id="btn3days" class="segbtn" type="button">3</button>
+                <button id="btn7days" class="segbtn is-active" type="button">7</button>
+              </div>
+            </div>
+
+            <div id="dailyList" class="daily daily-7" aria-label="Daily forecast"></div>
+          </section>
+        </section>
+      </div>
+
+      <section class="section" id="radar">
+        <div class="section-head">
+          <h2 class="h2" data-i18n="radar.title">Radar map</h2>
+          <div class="small muted" data-i18n="radar.note">Interactive precipitation radar (Windy embed).</div>
+        </div>
+        <div class="card radar">
+          <iframe id="radarFrame" title="Radar"></iframe>
+        </div>
       </section>
 
-      <aside class="side-col" aria-label="Дополнительно">
-        <section class="card" aria-label="Карта">
-          <h2>Карта</h2>
-          <div style="height:200px; background:#f5f5f5; border:1px solid #ddd; display:flex; align-items:center; justify-content:center;">
-            Map (заглушка)
+      <section class="section" id="news">
+        <div class="section-head">
+          <h2 class="h2" data-i18n="news.title">Weather tips</h2>
+          <div class="small muted" data-i18n="news.note">Small useful hints for today.</div>
+        </div>
+
+        <div class="news">
+          <div class="card news-card">
+            <h3 class="h3" data-i18n="news.card1.title">How to read “Feels like”</h3>
+            <p class="muted" data-i18n="news.card1.text">—</p>
           </div>
-        </section>
-
-        <section class="card" aria-label="Индексы">
-          <h2>Индексы</h2>
-
-          <div class="kpi-grid">
-            <div class="kpi">
-              <div class="kpi-label">Осадки</div>
-              <div class="kpi-value" id="precip">0 мм</div>
-            </div>
-
-            <div class="kpi">
-              <div class="kpi-label">Видимость</div>
-              <div class="kpi-value" id="visibility">10 км</div>
-            </div>
-
-            <div class="kpi">
-              <div class="kpi-label">UV</div>
-              <div class="kpi-value" id="uv">1</div>
-            </div>
-
-            <div class="kpi">
-              <div class="kpi-label">Облачность</div>
-              <div class="kpi-value" id="clouds">70%</div>
-            </div>
+          <div class="card news-card">
+            <h3 class="h3" data-i18n="news.card2.title">UV index</h3>
+            <p class="muted" data-i18n="news.card2.text">—</p>
           </div>
-        </section>
-      </aside>
+        </div>
+      </section>
 
+      <footer class="footer small muted">
+        <span data-i18n="footer.powered">Powered by</span> Open-Meteo
+      </footer>
     </div>
   </main>
 
-  <footer class="site-footer">
-    <div class="container">
-      <small>© <span id="year"></span> Weather Forecast</small>
-    </div>
-  </footer>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
-<script src="js/utils.js"></script>
-<script src="js/api.js"></script>
-<script src="js/ui.js"></script>
-<script src="js/script.js"></script>
-
-
+  <script src="js/api.js"></script>
+  <script src="js/script.js"></script>
 </body>
 </html>
