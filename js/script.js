@@ -16,7 +16,7 @@ var dict = {
     brand: "WeatherForecast",
     nav: { today: "Today", forecast: "Forecast", radar: "Radar", news: "News" },
     search: { placeholder: "Search city…" },
-    btn: { myLocation: "My location", signIn: "Sign in" },
+    btn: { myLocation: "My location", signIn: "Sign in", search: "Search" },
     now: { feels: "Feels like" },
     stat: { wind: "Wind", humidity: "Humidity", pressure: "Pressure", clouds: "Clouds", visibility: "Visibility", uv: "UV", sunrise: "Sunrise", sunset: "Sunset" },
     hourly: { title: "Next 24 hours" },
@@ -47,7 +47,7 @@ var dict = {
     brand: "WeatherForecast",
     nav: { today: "Сегодня", forecast: "Прогноз", radar: "Радар", news: "Советы" },
     search: { placeholder: "Введите город…" },
-    btn: { myLocation: "Моё место", signIn: "Войти" },
+    btn: { myLocation: "Моё место", signIn: "Войти", search: "Найти" },
     now: { feels: "Ощущается как" },
     stat: { wind: "Ветер", humidity: "Влажность", pressure: "Давление", clouds: "Облачность", visibility: "Видимость", uv: "УФ", sunrise: "Восход", sunset: "Закат" },
     hourly: { title: "Ближайшие 24 часа" },
@@ -78,7 +78,7 @@ var dict = {
     brand: "WeatherForecast",
     nav: { today: "Сьогодні", forecast: "Прогноз", radar: "Радар", news: "Поради" },
     search: { placeholder: "Введіть місто…" },
-    btn: { myLocation: "Моє місце", signIn: "Увійти" },
+    btn: { myLocation: "Моє місце", signIn: "Увійти", search: "Знайти" },
     now: { feels: "Відчувається як" },
     stat: { wind: "Вітер", humidity: "Вологість", pressure: "Тиск", clouds: "Хмарність", visibility: "Видимість", uv: "УФ", sunrise: "Схід", sunset: "Захід" },
     hourly: { title: "Найближчі 24 години" },
@@ -704,5 +704,222 @@ function init() {
   refreshAll();
   setInterval(function () { refreshAll(); }, 10 * 60 * 1000);
 }
+
+/* ===== WEATHER EFFECTS ===== */
+var weatherEffects = {
+  container: null,
+  currentEffect: null,
+
+  init: function() {
+    this.container = document.getElementById('weatherEffect');
+  },
+
+  clear: function() {
+    if (this.container) {
+      this.container.innerHTML = '';
+    }
+    this.currentEffect = null;
+  },
+
+  createRain: function() {
+    this.clear();
+    this.currentEffect = 'rain';
+
+    for (var i = 0; i < 100; i++) {
+      var drop = document.createElement('div');
+      drop.className = 'rain';
+      drop.style.left = Math.random() * 100 + '%';
+      drop.style.animationDuration = (Math.random() * 0.5 + 0.5) + 's';
+      drop.style.animationDelay = Math.random() * 2 + 's';
+      this.container.appendChild(drop);
+    }
+  },
+
+  createSnow: function() {
+    this.clear();
+    this.currentEffect = 'snow';
+
+    for (var i = 0; i < 50; i++) {
+      var flake = document.createElement('div');
+      flake.className = 'snow';
+      flake.style.left = Math.random() * 100 + '%';
+      flake.style.animationDuration = (Math.random() * 3 + 2) + 's';
+      flake.style.animationDelay = Math.random() * 5 + 's';
+      this.container.appendChild(flake);
+    }
+  },
+
+  setEffect: function(weatherCode) {
+    // Rain codes: 51,53,55,56,57,61,63,65,66,67,80,81,82
+    if ([51,53,55,56,57,61,63,65,66,67,80,81,82].indexOf(weatherCode) >= 0) {
+      if (this.currentEffect !== 'rain') this.createRain();
+    }
+    // Snow codes: 71,73,75,77,85,86
+    else if ([71,73,75,77,85,86].indexOf(weatherCode) >= 0) {
+      if (this.currentEffect !== 'snow') this.createSnow();
+    }
+    // Clear for other conditions
+    else {
+      this.clear();
+    }
+  }
+};
+
+/* ===== TEMPERATURE CHART ===== */
+var tempChart = {
+  chart: null,
+
+  create: function(data) {
+    var ctx = document.getElementById('tempChart');
+    if (!ctx) return;
+
+    var h = data.hourly;
+    var nowIso = data.current && data.current.time ? data.current.time : null;
+    var times = h.time || [];
+    var startIndex = findStartIndex(times, nowIso);
+    var endIndex = Math.min(startIndex + 24, times.length);
+
+    var labels = [];
+    var temps = [];
+
+    for (var k = startIndex; k < endIndex; k++) {
+      labels.push(hhmm(times[k]));
+      temps.push(Math.round(h.temperature_2m[k]));
+    }
+
+    if (this.chart) {
+      this.chart.destroy();
+    }
+
+    var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    var gridColor = isDark ? 'rgba(233,238,252,.14)' : 'rgba(11,18,32,.12)';
+    var textColor = isDark ? 'rgba(233,238,252,.78)' : 'rgba(11,18,32,.65)';
+
+    this.chart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Temperature',
+          data: temps,
+          borderColor: 'rgba(26, 124, 255, 1)',
+          backgroundColor: 'rgba(26, 124, 255, 0.1)',
+          tension: 0.4,
+          fill: true,
+          pointRadius: 3,
+          pointHoverRadius: 6,
+          pointBackgroundColor: 'rgba(26, 124, 255, 1)',
+          pointBorderColor: '#fff',
+          pointBorderWidth: 2
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: false
+          },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                return context.parsed.y + tempUnitLabel();
+              }
+            }
+          }
+        },
+        scales: {
+          x: {
+            grid: {
+              color: gridColor
+            },
+            ticks: {
+              color: textColor,
+              maxRotation: 0,
+              autoSkip: true,
+              maxTicksLimit: 8
+            }
+          },
+          y: {
+            grid: {
+              color: gridColor
+            },
+            ticks: {
+              color: textColor,
+              callback: function(value) {
+                return value + '°';
+              }
+            }
+          }
+        }
+      }
+    });
+  },
+
+  update: function(data) {
+    this.create(data);
+  }
+};
+
+
+/* ===== ENHANCED LOADING ===== */
+function showLoader() {
+  $(".weather-loader").addClass("active");
+}
+
+function hideLoader() {
+  $(".weather-loader").removeClass("active");
+}
+
+/* ===== UPDATE RENDER FUNCTIONS ===== */
+var originalRenderCurrent = renderCurrent;
+renderCurrent = function(data) {
+  originalRenderCurrent(data);
+  weatherEffects.setEffect(data.current.weather_code);
+  $(".hero").addClass("fade-in");
+};
+
+var originalRenderHourly = renderHourly;
+renderHourly = function(data) {
+  originalRenderHourly(data);
+  tempChart.update(data);
+};
+
+var originalRefreshAll = refreshAll;
+refreshAll = function() {
+  showLoader();
+  return originalRefreshAll().then(function() {
+    hideLoader();
+  }).catch(function(err) {
+    hideLoader();
+    throw err;
+  });
+};
+
+/* ===== ENHANCED BIND UI ===== */
+var originalBindUI = bindUI;
+bindUI = function() {
+  originalBindUI();
+
+  var originalThemeToggle = $("#themeToggle").prop("onclick");
+  $("#themeToggle").off("click").on("click", function() {
+    app.theme = (app.theme === "auto") ? "light" : (app.theme === "light" ? "dark" : "auto");
+    saveSettings();
+    applyTheme();
+
+    // Update chart colors
+    if (app.lastData && tempChart.chart) {
+      tempChart.update(app.lastData);
+    }
+  });
+};
+
+/* ===== ENHANCED INIT ===== */
+var originalInit = init;
+init = function() {
+  weatherEffects.init();
+
+  originalInit();
+};
 
 $(init);
