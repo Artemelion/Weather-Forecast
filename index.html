@@ -35,14 +35,6 @@
       </div>
 
       <nav id="primaryMenu" class="menu" aria-label="primary">
-        <div class="menu-top">
-          <select id="langSelect" class="select" aria-label="Language">
-            <option value="en">EN</option>
-            <option value="ru">RU</option>
-            <option value="ua">UA</option>
-          </select>
-          <button id="themeToggle" class="btn btn-icon" type="button" aria-label="Theme">🌙</button>
-        </div>
 
         <!-- 'Today' removed per request -->
         <a href="#forecast" data-i18n="nav.forecast">Forecast</a>
@@ -55,6 +47,12 @@
       </nav>
 
       <div class="topbar-controls">
+        <select id="langSelect" class="select" aria-label="Language">
+          <option value="en">EN</option>
+          <option value="ru">RU</option>
+          <option value="ua">UA</option>
+        </select>
+        <button id="themeToggle" class="btn btn-icon" type="button" aria-label="Theme">🌙</button>
       </div>
 
       <button id="menuToggle" class="hamburger" aria-label="Menu" aria-controls="primaryMenu" aria-expanded="false">☰</button>
