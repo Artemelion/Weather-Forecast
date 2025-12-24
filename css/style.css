@@ -60,7 +60,7 @@ body{
   line-height: 1.5;
   font-size:var(--fs);
   /* light-blue unified gradient background */
-  background: linear-gradient(180deg, #2bb6f1 0%, #b8d9f0 50%, var(--bg) 100%);
+  background: linear-gradient(180deg, #53b5df 0%, #b8d9f0 50%, var(--bg) 100%);
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
@@ -554,6 +554,7 @@ html[data-theme="dark"] .topbar{
   min-width: 0; /* позволить элементу сжиматься внутри ячейки */
   align-self: stretch;
   border-radius:1rem;
+  padding:.75rem;
 }
 
 .day-top{
