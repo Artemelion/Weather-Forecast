@@ -912,6 +912,33 @@ bindUI = function() {
       tempChart.update(app.lastData);
     }
   });
+
+  // Mobile menu toggle
+  (function(){
+    var $menu = $(".menu");
+    var $toggle = $("#menuToggle");
+    if (!$toggle.length || !$menu.length) return;
+
+    $toggle.off("click").on("click", function(e){
+      e.stopPropagation();
+      var opened = $menu.hasClass("is-open");
+      $menu.toggleClass("is-open", !opened);
+      $toggle.attr("aria-expanded", String(!opened));
+    });
+
+    // close on outside click
+    $(document).on("click.menuclose", function(e){
+      if (!$(e.target).closest('.topbar-inner').length) {
+        $menu.removeClass('is-open');
+        $toggle.attr('aria-expanded','false');
+      }
+    });
+
+    $menu.find('a').on('click', function(){
+      $menu.removeClass('is-open');
+      $toggle.attr('aria-expanded','false');
+    });
+  })();
 };
 
 /* ===== ENHANCED INIT ===== */

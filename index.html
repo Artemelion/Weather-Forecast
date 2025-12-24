@@ -24,32 +24,40 @@
         <span class="brand-name" data-i18n="brand">WeatherForecast</span>
       </a>
 
-      <nav class="menu" aria-label="primary">
-        <a href="#today" data-i18n="nav.today">Today</a>
+      <!-- moved search out of controls to allow middle positioning -->
+      <div class="search-wrapper">
+        <form id="searchForm" class="search" autocomplete="off">
+          <button type="button" id="btnMyLocation" class="btn-location-left" aria-label="My location">📍</button>
+          <input id="q" class="search-input" type="search" data-i18n-placeholder="search.placeholder" placeholder="Search city…" />
+          <button type="submit" class="btn-search-icon" aria-label="Search">🔎</button>
+          <div id="suggestions" class="suggestions" role="listbox" aria-label="Suggestions"></div>
+        </form>
+      </div>
+
+      <nav id="primaryMenu" class="menu" aria-label="primary">
+        <div class="menu-top">
+          <select id="langSelect" class="select" aria-label="Language">
+            <option value="en">EN</option>
+            <option value="ru">RU</option>
+            <option value="ua">UA</option>
+          </select>
+          <button id="themeToggle" class="btn btn-icon" type="button" aria-label="Theme">🌙</button>
+        </div>
+
+        <!-- 'Today' removed per request -->
         <a href="#forecast" data-i18n="nav.forecast">Forecast</a>
         <a href="#radar" data-i18n="nav.radar">Radar</a>
         <a href="#news" data-i18n="nav.news">News</a>
+
+        <div class="menu-bottom">
+          <button id="accountBtn" class="btn btn-primary" type="button" data-i18n="btn.signIn">Sign in</button>
+        </div>
       </nav>
 
       <div class="topbar-controls">
-        <div class="search-wrapper">
-          <form id="searchForm" class="search" autocomplete="off">
-            <button type="button" id="btnMyLocation" class="btn-location-left" aria-label="My location">📍</button>
-            <input id="q" class="search-input" type="search" data-i18n-placeholder="search.placeholder" placeholder="Search city…" />
-            <button type="submit" class="btn-search-icon" aria-label="Search">🔎</button>
-            <div id="suggestions" class="suggestions" role="listbox" aria-label="Suggestions"></div>
-          </form>
-        </div>
-
-        <select id="langSelect" class="select" aria-label="Language">
-          <option value="en">EN</option>
-          <option value="ru">RU</option>
-          <option value="ua">UA</option>
-        </select>
-
-        <button id="themeToggle" class="btn btn-icon" type="button" aria-label="Theme">🌙</button>
-        <button id="accountBtn" class="btn btn-primary" type="button" data-i18n="btn.signIn">Sign in</button>
       </div>
+
+      <button id="menuToggle" class="hamburger" aria-label="Menu" aria-controls="primaryMenu" aria-expanded="false">☰</button>
     </div>
   </header>
 
