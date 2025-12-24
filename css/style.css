@@ -445,23 +445,71 @@ overflow: hidden;       /* чтобы длинный текст не ломал 
 .daily{
   display:grid;
   gap:.75rem;
+  justify-items: stretch; /* растянуть элементы по ширине колонки */
+  align-items: start; /* выравнивание по верху ячеек */
+  grid-auto-rows: 1fr; /* сделать строки одинаковой высоты */
+
 }
 .daily-7{
-  grid-template-columns:repeat(7, minmax(0,1fr));
+  grid-template-columns: repeat(7, minmax(0, 1fr));
 }
-.daily-7 .day{padding:.65rem .7rem;}
-.daily-7 .day-more{display:none;}
 
+.daily-7 .day{
+  padding: .6rem .45rem;
+  text-align: center;
+}
+.daily-7 .day-top{
+  flex-direction: column;
+  align-items: center;
+  gap: .2rem;
+}
+.daily-7 .day-top > div:first-child {
+  width: 100%;
+  text-align: center;
+}
+.daily-7 .day-icon{
+  font-size: 1.8rem;
+  width: auto;
+  height: auto;
+  margin: .15rem 0;
+}
+.daily-7 .day-name{
+  font-size: 1rem;
+  font-weight: 900;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.daily-7 .day-muted{
+  font-size: 0.65rem;
+  margin-top: .1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+.daily-7 .day-temps{
+  font-size: 0.8rem;
+  margin-top: .3rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
 .daily-3{
   grid-template-columns:repeat(3, minmax(0,1fr));
 }
 
 .day{
+  display: flex;
+  flex-direction: column;    
   border:1px solid var(--line);
   background:var(--panel);
   border-radius:1rem;
   padding:.85rem;
-  min-height:6.2rem;
+  min-height:6.2rem;   
+  height: 100%; /* растянуть карточку на всю высоту ячейки */ 
+  min-width: 0; /* позволить элементу сжиматься внутри ячейки */
+  align-self: stretch;
 }
 
 /* icon near weekday (NOT far right) */
@@ -470,12 +518,18 @@ overflow: hidden;       /* чтобы длинный текст не ломал 
   align-items:center;
   justify-content:flex-start; /* <- was space-between */
   gap:.5rem;
+  flex-direction: row;
 }
-.day-name{font-weight:800}
+.day-name{font-weight:900;flex: 1;}
 .day-icon{
-  font-size:1.4rem;
-  line-height:1;
-  margin-left:.15rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size:2rem;
+    width:2.6rem;
+    height:2.6rem;
+    margin-right: auto;
+    order: 1;
 }
 
 .day-temps{margin-top:.35rem;font-weight:800}
@@ -486,6 +540,14 @@ overflow: hidden;       /* чтобы длинный текст не ломал 
   font-size:var(--fssm);
   display:grid;
   gap:.2rem;
+}
+
+.day-top > div:first-child {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;  
+  
 }
 
 .segmented{
