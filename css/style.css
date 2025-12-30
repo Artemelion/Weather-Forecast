@@ -1034,12 +1034,40 @@ html[data-theme="dark"] .is-loading .day::after {
   }
 }
 
-/* Dark theme specific text overrides */
+/* Dark theme specific text overrides - GLOBAL FORCE */
+html[data-theme="dark"] body {
+  color: var(--text) !important;
+}
+
 html[data-theme="dark"] .sugg-item,
 html[data-theme="dark"] .search-input,
 html[data-theme="dark"] .menu a,
+html[data-theme="dark"] .chip,
+html[data-theme="dark"] .muted,
+html[data-theme="dark"] .small,
+html[data-theme="dark"] .h1,
+html[data-theme="dark"] .h2,
+html[data-theme="dark"] .h3,
 html[data-theme="dark"] .sun-k,
+html[data-theme="dark"] .sun-v,
 html[data-theme="dark"] .stat-k,
-html[data-theme="dark"] .stat-s {
+html[data-theme="dark"] .stat-s,
+html[data-theme="dark"] .stat-v,
+html[data-theme="dark"] .hour-t,
+html[data-theme="dark"] .hour-temp,
+html[data-theme="dark"] .hour-meta,
+html[data-theme="dark"] .day-name,
+html[data-theme="dark"] .day-temps,
+html[data-theme="dark"] .day-muted,
+html[data-theme="dark"] .news-card,
+html[data-theme="dark"] .radar,
+html[data-theme="dark"] .footer {
+  color: var(--text) !important;
+}
+
+/* Fix for gradient text in dark mode */
+html[data-theme="dark"] .now-temp {
+  background: none !important;
+  -webkit-text-fill-color: var(--text) !important;
   color: var(--text) !important;
 }
