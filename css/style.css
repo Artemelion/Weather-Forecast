@@ -47,25 +47,10 @@ html[data-theme="dark"] .stat,
 html[data-theme="dark"] .hourly>.hour,
 html[data-theme="dark"] .day,
 html[data-theme="dark"] .sunbox,
-html[data-theme="dark"] .chip {
-  color: var(--text);
-}
+
 
 * {
   box-sizing: border-box
-}
-
-/* Global responsive images/media */
-img,
-video,
-iframe,
-svg {
-  max-width: 100%;
-  height: auto;
-  display: block;
-  /* removes bottom gap */
-  object-fit: cover;
-  /* prevents distortion */
 }
 
 html,
@@ -79,6 +64,8 @@ body {
   font-optical-sizing: auto;
   line-height: 1.5;
   font-size: var(--fs);
+  color: var(--text);
+  /* Set default text color for inheritance */
   /* light-blue unified gradient background */
   background: linear-gradient(180deg, #53b5df 0%, #b8d9f0 50%, var(--bg) 100%);
   background-repeat: no-repeat;
@@ -221,11 +208,13 @@ html[data-theme="dark"] .topbar {
 }
 
 .btn-icon {
-  width: 2.4rem;
-  padding: .45rem 0;
+  width: 3.2rem;
+  height: 3.2rem;
+  padding: 0;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  font-size: 1.4rem;
 }
 
 .select {
@@ -252,14 +241,14 @@ html[data-theme="dark"] .topbar {
   display: none;
   align-items: center;
   justify-content: center;
-  width: 2.6rem;
-  height: 2.6rem;
-  border-radius: .6rem;
+  width: 3.2rem;
+  height: 3.2rem;
+  border-radius: .8rem;
   border: 1px solid var(--line);
   background: var(--panel);
   color: var(--text);
   cursor: pointer;
-  font-size: 1.15rem;
+  font-size: 1.5rem;
 }
 
 .search {
@@ -284,8 +273,8 @@ html[data-theme="dark"] .topbar {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 2.6rem;
-  height: 2.6rem;
+  width: 3.2rem;
+  height: 3.2rem;
   margin: .2rem .15rem .2rem .3rem;
   border: none;
   background: transparent;
@@ -293,7 +282,7 @@ html[data-theme="dark"] .topbar {
   border-radius: 50%;
   cursor: pointer;
   transition: all 0.2s ease;
-  font-size: 1.15rem;
+  font-size: 1.3rem;
   flex-shrink: 0;
 }
 
@@ -330,8 +319,8 @@ html[data-theme="dark"] .topbar {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 2.6rem;
-  height: 2.6rem;
+  width: 3.2rem;
+  height: 3.2rem;
   margin: .15rem;
   border: none;
   background: transparent;
@@ -339,7 +328,7 @@ html[data-theme="dark"] .topbar {
   border-radius: 50%;
   cursor: pointer;
   transition: transform .18s ease, background .18s ease, color .18s ease;
-  font-size: 1rem;
+  font-size: 1.3rem;
   line-height: 1;
   flex-shrink: 0;
 }
@@ -1043,4 +1032,14 @@ html[data-theme="dark"] .is-loading .day::after {
   .topbar-inner {
     gap: .5rem;
   }
+}
+
+/* Dark theme specific text overrides */
+html[data-theme="dark"] .sugg-item,
+html[data-theme="dark"] .search-input,
+html[data-theme="dark"] .menu a,
+html[data-theme="dark"] .sun-k,
+html[data-theme="dark"] .stat-k,
+html[data-theme="dark"] .stat-s {
+  color: var(--text) !important;
 }
